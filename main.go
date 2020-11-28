@@ -37,11 +37,9 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 	}
 
-	code := r.Form.Get("code")
-
 	data := url.Values{}
 	data.Add("grant_type", "authorization_code")
-	data.Add("code", code)
+	data.Add("code", r.Form.Get("code"))
 	data.Add("redirect_uri", callbackURL)
 	data.Add("client_id", clientID)
 	data.Add("client_secret", clientSecret)
@@ -66,10 +64,8 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 		log.Println(err.Error())
 	}
 
-	msg := r.Form.Get("msg")
-
 	data := url.Values{}
-	data.Add("message", msg)
+	data.Add("message", r.Form.Get("message"))
 
 	payload, err := app.Call("POST", "https://notify-api.line.me/api/notify", data, token)
 
