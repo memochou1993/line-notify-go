@@ -86,7 +86,7 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func authHandler(w http.ResponseWriter, r *http.Request) {
-	var tmpl = template.Must(template.ParseFiles("./templates/auth.html"))
+	var tmpl = template.Must(template.ParseFiles("templates/auth.html"))
 
 	err := tmpl.Execute(w, struct {
 		ClientID    string
