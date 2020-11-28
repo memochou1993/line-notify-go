@@ -9,13 +9,16 @@
         <button onclick="auth();">登入</button>
         <script>
             function auth() {
-                let URL = 'https://notify-bot.line.me/oauth/authorize?';
-                URL += 'response_type=code';
-                URL += '&client_id={{.ClientID}}';
-                URL += '&redirect_uri={{.CallbackURL}}';
-                URL += '&scope=notify';
-                URL += '&state=NO_STATE';
-                window.location.href = URL;
+                const url = 'https://notify-bot.line.me/oauth/authorize';
+
+                const query = new URLSearchParams({
+                    scope: 'notify',
+                    client_id: '{{.ClientID}}',
+                    redirect_uri: '{{.CallbackURL}}',
+                    state: '{{.State}}',
+                });
+
+                window.location.href = `${url}?${query.toString()}`;
             }
         </script>
 	</body>

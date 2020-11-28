@@ -8,6 +8,7 @@ import (
 
 	"html/template"
 	"log"
+	"math/rand"
 	"net/http"
 	"net/url"
 )
@@ -70,7 +71,7 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 	data := url.Values{}
 	data.Add("message", msg)
 
-	payload, err := app.Call("POST", "https://notify-bot.line.me/api/notify", data, token)
+	payload, err := app.Call("POST", "https://notify-api.line.me/api/notify", data, token)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -91,9 +92,11 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 	err := tmpl.Execute(w, struct {
 		ClientID    string
 		CallbackURL string
+		State       int
 	}{
 		ClientID:    clientID,
 		CallbackURL: callbackURL,
+		State:       rand.Int(),
 	})
 
 	if err != nil {
