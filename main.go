@@ -31,31 +31,6 @@ func main() {
 	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("APP_PORT")), nil))
 }
 
-func notifyHandler(w http.ResponseWriter, r *http.Request) {
-	if err := r.ParseForm(); err != nil {
-		log.Println(err.Error())
-	}
-
-	msg := r.Form.Get("msg")
-
-	data := url.Values{}
-	data.Add("message", msg)
-
-	payload, err := call("POST", endpoint+"/api/notify", data, token)
-
-	if err != nil {
-		log.Println(err.Error())
-	}
-
-	res := parse(payload)
-
-	token = res.AccessToken
-
-	if _, err := w.Write(payload); err != nil {
-		log.Println(err.Error())
-	}
-}
-
 func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	if err := r.ParseForm(); err != nil {
 		log.Println(err.Error())
@@ -85,8 +60,33 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+func notifyHandler(w http.ResponseWriter, r *http.Request) {
+	if err := r.ParseForm(); err != nil {
+		log.Println(err.Error())
+	}
+
+	msg := r.Form.Get("msg")
+
+	data := url.Values{}
+	data.Add("message", msg)
+
+	payload, err := call("POST", endpoint+"/api/notify", data, token)
+
+	if err != nil {
+		log.Println(err.Error())
+	}
+
+	res := parse(payload)
+
+	token = res.AccessToken
+
+	if _, err := w.Write(payload); err != nil {
+		log.Println(err.Error())
+	}
+}
+
 func authHandler(w http.ResponseWriter, r *http.Request) {
-	var tmpl = template.Must(template.ParseFiles("index.html"))
+	var tmpl = template.Must(template.ParseFiles("templates/auth.html"))
 
 	err := tmpl.Execute(w, struct {
 		ClientID    string
