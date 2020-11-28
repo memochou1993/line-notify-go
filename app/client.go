@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -20,6 +21,8 @@ func Call(method string, url string, data url.Values, token string) ([]byte, err
 		res, _ = http.NewRequest(method, url, nil)
 	} else {
 		res, _ = http.NewRequest(method, url, strings.NewReader(data.Encode()))
+
+		res.Header.Add("Content-Length", strconv.Itoa(len(data.Encode())))
 	}
 
 	res.Header.Add("Content-Type", "application/x-www-form-urlencoded")
