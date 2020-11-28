@@ -6,12 +6,13 @@
         <title>Memo's Notify</title>
     </head>
     <body>
-        <button onclick="auth();">登入</button>
+        <button onclick="authorize();">登入</button>
         <script>
-            function auth() {
+            function authorize() {
                 const url = 'https://notify-bot.line.me/oauth/authorize';
 
                 const query = new URLSearchParams({
+                    response_type: 'code',
                     scope: 'notify',
                     client_id: '{{.ClientID}}',
                     redirect_uri: '{{.CallbackURL}}',
