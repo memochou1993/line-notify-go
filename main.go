@@ -45,7 +45,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	data.Add("client_id", clientID)
 	data.Add("client_secret", clientSecret)
 
-	payload, err := app.Call("POST", app.Endpoint+"/oauth/token", data, "")
+	payload, err := app.Call("POST", "https://notify-bot.line.me/oauth/token", data, "")
 
 	if err != nil {
 		log.Println(err.Error())
@@ -70,9 +70,7 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 	data := url.Values{}
 	data.Add("message", msg)
 
-	log.Println(token)
-
-	payload, err := app.Call("POST", app.Endpoint+"/api/notify", data, token)
+	payload, err := app.Call("POST", "https://notify-bot.line.me/api/notify", data, token)
 
 	if err != nil {
 		log.Println(err.Error())
