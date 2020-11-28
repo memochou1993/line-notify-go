@@ -70,6 +70,8 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 	data := url.Values{}
 	data.Add("message", msg)
 
+	log.Println(token)
+
 	payload, err := app.Call("POST", app.Endpoint+"/api/notify", data, token)
 
 	if err != nil {
