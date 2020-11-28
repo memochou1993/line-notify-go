@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Memo's Notify</title>
+    </head>
+    <body>
+        <button onclick="auth();">連結</button>
+        <script>
+            function auth() {
+                let URL = 'https://notify-bot.line.me/oauth/authorize?';
+                URL += 'response_type=code';
+                URL += '&client_id={{.ClientID}}';
+                URL += '&redirect_uri={{.CallbackURL}}';
+                URL += '&scope=notify';
+                URL += '&state=NO_STATE';
+                window.location.href = URL;
+            }
+        </script>
+	</body>
+</html>
