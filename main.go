@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	_ "github.com/joho/godotenv/autoload"
 
 	"log"
@@ -27,7 +28,7 @@ func main() {
 	http.HandleFunc("/notify", notifyHandler)
 	http.HandleFunc("/auth", authHandler)
 
-	log.Fatal(http.ListenAndServe(":85", nil))
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%s", os.Getenv("APP_PORT")), nil))
 }
 
 func notifyHandler(w http.ResponseWriter, r *http.Request) {
@@ -40,7 +41,7 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 	data := url.Values{}
 	data.Add("message", msg)
 
-	payload, err := call("POST", host+"/api/notify", data, token)
+	payload, err := call("POST", endpoint+"/api/notify", data, token)
 
 	if err != nil {
 		log.Println(err.Error())
@@ -69,7 +70,7 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	data.Add("client_id", clientID)
 	data.Add("client_secret", clientSecret)
 
-	payload, err := call("POST", host+"/oauth/token", data, "")
+	payload, err := call("POST", endpoint+"/oauth/token", data, "")
 
 	if err != nil {
 		log.Println(err.Error())

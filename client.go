@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	host string = "https://notify-bot.line.me"
+	endpoint string = "https://notify-bot.line.me"
 )
 
 func call(method string, url string, data url.Values, token string) ([]byte, error) {
