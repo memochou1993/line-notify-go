@@ -9,17 +9,17 @@
         <button onclick="authorize();">登入</button>
         <script>
             function authorize() {
-                const url = 'https://notify-bot.line.me/oauth/authorize';
+                const url = new URL('https://notify-bot.line.me/oauth/authorize');
 
-                const query = new URLSearchParams({
+                url.search = (new URLSearchParams({
                     response_type: 'code',
                     scope: 'notify',
                     client_id: '{{.ClientID}}',
                     redirect_uri: '{{.CallbackURL}}',
                     state: '{{.State}}',
-                });
+                })).toString();
 
-                window.location.href = `${url}?${query.toString()}`;
+                window.location.href = url.href;
             }
         </script>
 	</body>
