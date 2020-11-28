@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"fmt"
@@ -9,10 +9,10 @@ import (
 )
 
 const (
-	endpoint string = "https://notify-bot.line.me"
+	Endpoint string = "https://notify-bot.line.me"
 )
 
-func call(method string, url string, data url.Values, token string) ([]byte, error) {
+func Call(method string, url string, data url.Values, token string) ([]byte, error) {
 	client := &http.Client{}
 	res := &http.Request{}
 

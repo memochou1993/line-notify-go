@@ -3,13 +3,13 @@ package main
 import (
 	"fmt"
 	_ "github.com/joho/godotenv/autoload"
-
-	"log"
-	"net/http"
-	"net/url"
+	"github.com/memochou1993/line-notify/app"
 	"os"
 
 	"html/template"
+	"log"
+	"net/http"
+	"net/url"
 )
 
 var (
@@ -45,13 +45,13 @@ func callbackHandler(w http.ResponseWriter, r *http.Request) {
 	data.Add("client_id", clientID)
 	data.Add("client_secret", clientSecret)
 
-	payload, err := call("POST", endpoint+"/oauth/token", data, "")
+	payload, err := app.Call("POST", app.Endpoint+"/oauth/token", data, "")
 
 	if err != nil {
 		log.Println(err.Error())
 	}
 
-	res := parse(payload)
+	res := app.Parse(payload)
 
 	token = res.AccessToken
 
@@ -70,13 +70,13 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 	data := url.Values{}
 	data.Add("message", msg)
 
-	payload, err := call("POST", endpoint+"/api/notify", data, token)
+	payload, err := app.Call("POST", app.Endpoint+"/api/notify", data, token)
 
 	if err != nil {
 		log.Println(err.Error())
 	}
 
-	res := parse(payload)
+	res := app.Parse(payload)
 
 	token = res.AccessToken
 
@@ -86,7 +86,7 @@ func notifyHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func authHandler(w http.ResponseWriter, r *http.Request) {
-	var tmpl = template.Must(template.ParseFiles("templates/auth.html"))
+	var tmpl = template.Must(template.ParseFiles("./templates/auth.html"))
 
 	err := tmpl.Execute(w, struct {
 		ClientID    string

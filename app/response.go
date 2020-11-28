@@ -1,4 +1,4 @@
-package main
+package app
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ type payload struct {
 	AccessToken string `json:"access_token"`
 }
 
-func parse(raw []byte) *payload {
+func Parse(raw []byte) *payload {
 	payload := &payload{}
 
 	if err := json.Unmarshal(raw, &payload); err != nil {
