@@ -1,4 +1,4 @@
-module github.com/memochou1993/line-notify
+module github.com/memochou1993/line-notify-go
 
 go 1.15
 

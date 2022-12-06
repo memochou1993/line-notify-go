@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
-	_ "github.com/joho/godotenv/autoload"
-	"github.com/memochou1993/line-notify/app"
 	"os"
+
+	_ "github.com/joho/godotenv/autoload"
+	"github.com/memochou1993/line-notify-go/app"
 
 	"html/template"
 	"log"
